@@ -85,13 +85,6 @@ func readFromFile(fileName: String) -> String {
     return ""
 }
 
-private let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .long
-    formatter.timeStyle = .none
-    return formatter
-}()
-
 
 
 //Extracted subviews
