@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F11816C1276A717B00920730 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11816C0276A717B00920730 /* CalendarView.swift */; };
 		F119BD3C276918A9008CEEBF /* Mobile_JournalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */; };
 		F119BD3E276918A9008CEEBF /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F119BD3D276918A9008CEEBF /* LogInView.swift */; };
 		F119BD40276918B1008CEEBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F119BD3F276918B1008CEEBF /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F11816C0276A717B00920730 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F119BD38276918A9008CEEBF /* Mobile Journal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Journal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mobile_JournalApp.swift; sourceTree = "<group>"; };
 		F119BD3D276918A9008CEEBF /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		F119BD3A276918A9008CEEBF /* Mobile Journal */ = {
 			isa = PBXGroup;
 			children = (
+				F11816C0276A717B00920730 /* CalendarView.swift */,
 				F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */,
 				F119BD3D276918A9008CEEBF /* LogInView.swift */,
 				F119BD6E27695107008CEEBF /* RegistrationView.swift */,
@@ -268,6 +271,7 @@
 			files = (
 				F119BD45276918B1008CEEBF /* Persistence.swift in Sources */,
 				F119BD48276918B1008CEEBF /* Mobile_Journal.xcdatamodeld in Sources */,
+				F11816C1276A717B00920730 /* CalendarView.swift in Sources */,
 				F119BD3E276918A9008CEEBF /* LogInView.swift in Sources */,
 				F119BD3C276918A9008CEEBF /* Mobile_JournalApp.swift in Sources */,
 				F119BD6F27695107008CEEBF /* RegistrationView.swift in Sources */,
