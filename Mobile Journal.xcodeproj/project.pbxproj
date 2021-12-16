@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F11816C1276A717B00920730 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11816C0276A717B00920730 /* CalendarView.swift */; };
+		F11816C3276BC6D300920730 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11816C2276BC6D300920730 /* MainView.swift */; };
+		F11816C5276BD68800920730 /* Mobile Journal Architecture.drawio in Resources */ = {isa = PBXBuildFile; fileRef = F11816C4276BD68800920730 /* Mobile Journal Architecture.drawio */; };
 		F119BD3C276918A9008CEEBF /* Mobile_JournalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */; };
 		F119BD3E276918A9008CEEBF /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F119BD3D276918A9008CEEBF /* LogInView.swift */; };
 		F119BD40276918B1008CEEBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F119BD3F276918B1008CEEBF /* Assets.xcassets */; };
@@ -18,6 +20,9 @@
 		F119BD5C276918B2008CEEBF /* Mobile_JournalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F119BD5B276918B2008CEEBF /* Mobile_JournalUITests.swift */; };
 		F119BD5E276918B2008CEEBF /* Mobile_JournalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F119BD5D276918B2008CEEBF /* Mobile_JournalUITestsLaunchTests.swift */; };
 		F119BD6F27695107008CEEBF /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F119BD6E27695107008CEEBF /* RegistrationView.swift */; };
+		F1227289276BE8A5007B730D /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1227288276BE8A5007B730D /* DateView.swift */; };
+		F122728B276BE8DD007B730D /* JournalEntryConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F122728A276BE8DD007B730D /* JournalEntryConfirmationView.swift */; };
+		F140F305276BE9CF0049D1FE /* JournalEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F140F304276BE9CF0049D1FE /* JournalEntryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		F11816C0276A717B00920730 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		F11816C2276BC6D300920730 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		F11816C4276BD68800920730 /* Mobile Journal Architecture.drawio */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Mobile Journal Architecture.drawio"; path = "../../Mobile Journal Architecture.drawio"; sourceTree = "<group>"; };
 		F119BD38276918A9008CEEBF /* Mobile Journal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Journal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mobile_JournalApp.swift; sourceTree = "<group>"; };
 		F119BD3D276918A9008CEEBF /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -52,6 +59,9 @@
 		F119BD5B276918B2008CEEBF /* Mobile_JournalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mobile_JournalUITests.swift; sourceTree = "<group>"; };
 		F119BD5D276918B2008CEEBF /* Mobile_JournalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mobile_JournalUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F119BD6E27695107008CEEBF /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		F1227288276BE8A5007B730D /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
+		F122728A276BE8DD007B730D /* JournalEntryConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntryConfirmationView.swift; sourceTree = "<group>"; };
+		F140F304276BE9CF0049D1FE /* JournalEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,13 +112,18 @@
 		F119BD3A276918A9008CEEBF /* Mobile Journal */ = {
 			isa = PBXGroup;
 			children = (
+				F140F304276BE9CF0049D1FE /* JournalEntryView.swift */,
+				F1227288276BE8A5007B730D /* DateView.swift */,
+				F122728A276BE8DD007B730D /* JournalEntryConfirmationView.swift */,
 				F11816C0276A717B00920730 /* CalendarView.swift */,
 				F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */,
 				F119BD3D276918A9008CEEBF /* LogInView.swift */,
 				F119BD6E27695107008CEEBF /* RegistrationView.swift */,
 				F119BD3F276918B1008CEEBF /* Assets.xcassets */,
+				F11816C2276BC6D300920730 /* MainView.swift */,
 				F119BD44276918B1008CEEBF /* Persistence.swift */,
 				F119BD46276918B1008CEEBF /* Mobile_Journal.xcdatamodeld */,
+				F11816C4276BD68800920730 /* Mobile Journal Architecture.drawio */,
 				F119BD41276918B1008CEEBF /* Preview Content */,
 			);
 			path = "Mobile Journal";
@@ -243,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F11816C5276BD68800920730 /* Mobile Journal Architecture.drawio in Resources */,
 				F119BD43276918B1008CEEBF /* Preview Assets.xcassets in Resources */,
 				F119BD40276918B1008CEEBF /* Assets.xcassets in Resources */,
 			);
@@ -270,9 +286,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F119BD45276918B1008CEEBF /* Persistence.swift in Sources */,
+				F140F305276BE9CF0049D1FE /* JournalEntryView.swift in Sources */,
+				F11816C3276BC6D300920730 /* MainView.swift in Sources */,
 				F119BD48276918B1008CEEBF /* Mobile_Journal.xcdatamodeld in Sources */,
+				F122728B276BE8DD007B730D /* JournalEntryConfirmationView.swift in Sources */,
 				F11816C1276A717B00920730 /* CalendarView.swift in Sources */,
 				F119BD3E276918A9008CEEBF /* LogInView.swift in Sources */,
+				F1227289276BE8A5007B730D /* DateView.swift in Sources */,
 				F119BD3C276918A9008CEEBF /* Mobile_JournalApp.swift in Sources */,
 				F119BD6F27695107008CEEBF /* RegistrationView.swift in Sources */,
 			);

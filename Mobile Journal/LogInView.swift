@@ -16,19 +16,13 @@ struct LogInView: View {
     var body: some View {
         VStack {
             LogInTitleView()
-            HStack {
-                Text("Username:").font(.body)
-                TextField("Required", text: $username).disableAutocorrection(true)
-            }
-            HStack {
-                Text("Password: ").font(.body)
-                TextField("Required", text: $password).disableAutocorrection(true)
-            }
+            LogInUsernameView(username: $username)
+            LogInPasswordView(password: $password)
             
             Button(action: {logIn(username: username, password: password)}) {
                 LogInButtonView()
             }
-            Button(action: {register()}) {
+            Button(action: {triggerRegistration()}) {
                 LogInRegisterView()
             }
         }.padding()
@@ -38,11 +32,9 @@ struct LogInView: View {
 
 //Primary functions
 
-/*Temporarily, all data will be stored in a file in json format*/
-/*TODO: Create user creation function to be called here*/
-func register() {
 
-    print("Navigating to registration...")
+func triggerRegistration() {
+    changeActiveView(newView: "Registration")
 }
 
 /*TODO: Create user login function to be called here*/
@@ -112,6 +104,28 @@ struct LogInTitleTextView: View {
 struct LogInTitleBGView: View {
     var body: some View {
         Image("orangeSwoosh").resizable().aspectRatio(contentMode: .fill)
+    }
+}
+
+struct LogInUsernameView: View {
+    @Binding var username: String
+    
+    var body: some View {
+        HStack {
+            Text("Username:").font(.body)
+            TextField("Required", text: $username).disableAutocorrection(true)
+        }
+    }
+}
+
+struct LogInPasswordView: View {
+    @Binding var password: String
+    
+    var body: some View {
+        HStack {
+            Text("Password: ").font(.body)
+            TextField("Required", text: $password).disableAutocorrection(true)
+        }
     }
 }
 
