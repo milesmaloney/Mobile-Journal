@@ -15,29 +15,31 @@ struct RegistrationView: View {
     
     var body: some View {
         VStack {
-            RegistrationTitleView()
+            RegistrationTitleView().frame(height: 200)
+            Spacer()
             HStack {
                 Text("E-mail:")
                 TextField("Required", text: $email).disableAutocorrection(true)
-            }.padding()
+            }.padding(.horizontal)
             HStack {
                 Text("Username:")
                 TextField("Required", text: $username).disableAutocorrection(true)
-            }.padding()
+            }.padding(.horizontal)
             HStack {
                 Text("Password:")
                 TextField("Required (8+ characters, 1 uppercase character, 1 lowercase character)", text: $password)
-            }.padding()
-            Text("Password must contain 8 or more characters, at least 1 uppercase character, and at least 1 lowercase character.").font(.footnote).foregroundColor(.gray)
+            }.padding(.horizontal)
+            Text("Password must contain 8 or more characters, at least 1 uppercase character, and at least 1 lowercase character.").font(.footnote).foregroundColor(.gray).padding(.horizontal)
             HStack {
                 Text("Confirm Password:")
                 TextField("Required", text: $password)
-            }.padding()
+            }.padding(.horizontal)
             Text("Passwords must match.").font(.footnote).foregroundColor(.gray)
             Button(action: {createAccount(email: email, username: username, password: password, passwordConfirm: passwordConfirm)}) {
                 Text("Create Account").font(.headline).fontWeight(.bold).frame(width: 200, height: 50).foregroundColor(.white).background(.orange).cornerRadius(10.0)
             }
-        }.padding()
+            Spacer()
+        }
     }
 }
 
