@@ -9,22 +9,18 @@ import SwiftUI
 import CoreData
 
 struct LogInView: View {
+    @Binding var user: User
     
-    @State var username: String = ""
+    @State var username: String = "1"
     @State var password: String = ""
     
     var body: some View {
         VStack {
-            LogInTitleView()
-            LogInUsernameView(username: $username)
-            LogInPasswordView(password: $password)
-            
-            Button(action: {logIn(username: username, password: password)}) {
-                LogInButtonView()
-            }
-            Button(action: {triggerRegistration()}) {
-                LogInRegisterView()
-            }
+            LogInTitleView(theme: self.$user.theme)
+            LogInUsernameView(username: self.$username)
+            LogInPasswordView(password: self.$password)
+            LogInButtonView(user: self.$user, username: self.$username, password: self.$password)
+            LogInRegisterView(theme: self.$user.theme)
         }.padding()
     }
 }
@@ -32,14 +28,19 @@ struct LogInView: View {
 
 //Primary functions
 
-
-func triggerRegistration() {
-    changeActiveView(newView: "Registration")
+/*This function will return a boolean value denoting whether or not the user was successfully logged in*/
+func logIn(username: String, password: String, user: inout User) -> Bool {
+    //TODO: replace if conditional with proper log-in
+    if(username != "") {
+        user = User(username: username, passwordHash: getPasswordHash(username: username), theme: defaultUser.theme, journalEntries: defaultUser.journalEntries)
+        return true
+    }
+    return false
 }
 
-/*TODO: Create user login function to be called here*/
-func logIn(username: String, password: String) {
-    print("Username: \(username)\nPassword: \(password)")
+//TODO: Query user data for password hash upon completion of database handler
+func getPasswordHash(username: String) -> String {
+    return defaultUser.passwordHash
 }
 
 
@@ -83,19 +84,23 @@ func readFromFile(fileName: String) -> String {
 
 
 struct LogInTitleView: View {
+    @Binding var theme: Theme
+    
     var body: some View {
         ZStack {
             LogInTitleBGView()
-            LogInTitleTextView()
+            LogInTitleTextView(theme: self.$theme)
         }.padding(.bottom, 100)
     }
 }
 
 
 struct LogInTitleTextView: View {
+    @Binding var theme: Theme
+    
     var body: some View {
         ZStack {
-            Text("Mobile Journal").font(.largeTitle).fontWeight(.bold).foregroundColor(.white).padding(.top, 100)
+            Text("Mobile Journal").font(.largeTitle).fontWeight(.bold).foregroundColor(self.theme.textColor).padding(.top, 100)
             Text("Mobile Journal").font(.largeTitle).fontWeight(.semibold).foregroundColor(.black).padding(.top, 100)
         }
     }
@@ -113,7 +118,7 @@ struct LogInUsernameView: View {
     var body: some View {
         HStack {
             Text("Username:").font(.body)
-            TextField("Required", text: $username).disableAutocorrection(true)
+            TextField("Required", text: self.$username).disableAutocorrection(true)
         }
     }
 }
@@ -124,20 +129,38 @@ struct LogInPasswordView: View {
     var body: some View {
         HStack {
             Text("Password: ").font(.body)
-            TextField("Required", text: $password).disableAutocorrection(true)
+            TextField("Required", text: self.$password).disableAutocorrection(true)
         }
     }
 }
 
 struct LogInButtonView: View {
+    @Binding var user: User
+    @Binding var username: String
+    @Binding var password: String
+    
     var body: some View {
-        Text("Log In").font(.headline).fontWeight(.bold).frame(width: 200, height: 50).foregroundColor(.white).background(.cyan).cornerRadius(10.0).padding(.top, 20)
+        Button(action: {
+            if(logIn(username: self.username, password: self.password, user: &self.user)) {
+                //TODO: Continue to logged-in views
+            }
+            else {
+                //TODO: Throw an error and edit the page accordingly
+            }
+        }) {
+            Text("Log In").font(.headline).fontWeight(.bold).frame(width: 200, height: 50).foregroundColor(self.user.theme.textColor).background(self.user.theme.primaryColor).cornerRadius(10.0).padding(.top, 20)
+        }
+        
     }
 }
 
 struct LogInRegisterView: View {
+    @Binding var theme: Theme
+    
     var body: some View {
-        Text("Don't have an account? Register here!").font(.subheadline).fontWeight(.semibold).foregroundColor(.orange)
+        NavigationLink(destination: RegistrationView(theme: self.$theme)) {
+            Text("Don't have an account? Register here!").font(.subheadline).fontWeight(.semibold).foregroundColor(self.theme.secondaryColor)
+        }
     }
 }
 
@@ -145,6 +168,6 @@ struct LogInRegisterView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).previewInterfaceOrientation(.portrait)
+        LogInView(user: .constant(defaultUser)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).previewInterfaceOrientation(.portrait)
     }
 }
