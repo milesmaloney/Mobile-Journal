@@ -15,7 +15,7 @@ let views: Array<String> = ["Log In","Registration", "Calendar","Date", "Journal
 
 let defaultUser = User(username: "", passwordHash: "NO_PASSWORD", theme: defaultTheme, journalEntries: [])
 
-let defaultTheme = Theme(textColor:z .red, primaryColor: .purple, secondaryColor: .green)
+let defaultTheme = Theme(textColor: .white, primaryColor: .cyan, secondaryColor: .orange)
 
 
 //Main view
