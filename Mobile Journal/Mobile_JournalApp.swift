@@ -13,7 +13,7 @@ struct Mobile_JournalApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LogInView()
+            MainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
