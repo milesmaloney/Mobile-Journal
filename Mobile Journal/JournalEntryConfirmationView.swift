@@ -9,7 +9,9 @@ import SwiftUI
 
 struct JournalEntryConfirmationView: View {
     var body: some View {
-        Text("JOURNAL_ENTRY_CONFIRMATION_VIEW_PLACEHOLDER")
+        VStack {
+            Text("JOURNAL_ENTRY_CONFIRMATION_VIEW_PLACEHOLDER")
+        }.navigationTitle("Confirmation").navigationBarTitleDisplayMode(.inline)
     }
 }
 

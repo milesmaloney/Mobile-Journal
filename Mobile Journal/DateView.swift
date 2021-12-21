@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct DateView: View {
+    @Binding var selectedDate: CalendarDate
+    
     var body: some View {
-        Text("DATE_VIEW_PLACEHOLDER")
+        VStack {
+            Text("You have selected \(selectedDate.month)/\(selectedDate.day)/\(String(selectedDate.year))")
+        }.navigationTitle("\(selectedDate.month)/\(selectedDate.day)/\(String(selectedDate.year))").navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct DateView_Previews: PreviewProvider {
     static var previews: some View {
-        DateView()
+        DateView(selectedDate: .constant(CalendarDate(day: 31, month: 12, year: 2021)))
     }
 }

@@ -21,7 +21,7 @@ struct LogInView: View {
             LogInPasswordView(password: self.$password)
             LogInButtonView(user: self.$user, username: self.$username, password: self.$password)
             LogInRegisterView(theme: self.$user.theme)
-        }.padding()
+        }.navigationTitle("Log In").navigationBarTitleDisplayMode(.inline).padding()
     }
 }
 

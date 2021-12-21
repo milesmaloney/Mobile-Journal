@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct JournalEntryView: View {
+    @Binding var today: CalendarDate
+    
     var body: some View {
-        Text("JOURNAL_ENTRY_VIEW_PLACEHOLDER")
+        VStack {
+            Text("JOURNAL_ENTRY_VIEW_PLACEHOLDER")
+        }.navigationTitle("Journal Entry").navigationBarTitleDisplayMode(.inline)
+        
     }
 }
 
 struct JournalEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        JournalEntryView()
+        JournalEntryView(today: .constant(CalendarDate(day: 31, month: 12, year: 2021)))
     }
 }

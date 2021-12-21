@@ -23,7 +23,7 @@ struct RegistrationView: View {
             RegistrationPasswordView(password: self.$password)
             RegistrationConfirmPWView(passwordConfirm: self.$passwordConfirm)
             RegistrationButtonView(email: self.$email, username: self.$username, password: self.$password, passwordConfirm: self.$passwordConfirm, theme: self.$theme)
-        }
+        }.navigationTitle("Registration").navigationBarTitleDisplayMode(.inline)
     }
 }
 

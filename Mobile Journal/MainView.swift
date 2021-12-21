@@ -17,44 +17,28 @@ let defaultUser = User(username: "", passwordHash: "NO_PASSWORD", theme: default
 
 let defaultTheme = Theme(textColor: .white, primaryColor: .cyan, secondaryColor: .orange)
 
-
-//Main view
-
-
-struct MainView: View {
-    @State var user: User
-    
-    
-    init() {
-        self.user = defaultUser
-    }
-    
-    var body: some View {
-        if(!userIsLoggedIn(user: self.user)) {
-            NavPreLogInView( user: self.$user)
-        }
-        else {
-            NavPostLogInView(user: self.$user)
-        }
-    }
-}
+let defaultSliders = [
+    Slider(title: "Productivity", range: 10, creatorName: "default"),
+    Slider(title: "Creativity", range: 10, creatorName: "default"),
+    Slider(title: "Enjoyment", range: 10, creatorName: "default"),
+    Slider(title: "Efficiency", range: 5, creatorName: "default"),
+    Slider(title: "Social Activity", range: 5, creatorName: "default"),
+    Slider(title: "Fitness", range: 5, creatorName: "default"),
+    Slider(title: "Hygiene", range: 5, creatorName: "default")
+]
 
 
-//Primary functions
+//Private constants
 
 
+//dataFormatter returns the current date in a shorthand style (MM/DD/YY)
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    formatter.timeStyle = .none
+    return formatter
+}()
 
-func logOut(user: inout User) -> Void{
-    user = defaultUser
-}
-
-
-//Helper functions
-
-
-func userIsLoggedIn(user: User) -> Bool {
-    user.username == "" ? false: true
-}
 
 //Data Structs
 
@@ -86,6 +70,98 @@ struct Theme {
     var secondaryColor: Color
 }
 
+struct CalendarDate {
+    var day: Int
+    var month: Int
+    var year: Int
+}
+
+
+//Primary view
+
+
+struct MainView: View {
+    @State var user: User
+    @State var date: CalendarDate
+    
+    
+    init() {
+        self.user = defaultUser
+        //gets the fields for the current date
+        let dateFields = getDateToday(formattedDate: dateFormatter.string(from: Date()))
+        //parses those fields into a CalendarDate object
+        self.date = CalendarDate(day: dateFields.day, month: dateFields.month, year: dateFields.year)
+    }
+    
+    var body: some View {
+        if(!userIsLoggedIn(user: self.user)) {
+            NavPreLogInView( user: self.$user)
+        }
+        else {
+            NavPostLogInView(user: self.$user, date: self.$date)
+        }
+    }
+}
+
+
+//Primary functions
+
+
+
+/*
+ This function logs out the current user
+ Parameters:
+    User (inout): the user state for the MainView which dictates the active user
+ Returns:
+    None: Changes the active user state to the default user
+ */
+func logOut(user: inout User) -> Void{
+    user = defaultUser
+}
+
+/*
+ This function gets the month, date, and year in integer format
+ Parameters:
+    formattedDate: The date as formatted by the formattedDate constant
+ Returns:
+    Tuple:
+        month: The current month
+        date: The current date
+        year: The current year
+ */
+func getDateToday(formattedDate: String) -> (month: Int, day: Int, year: Int) {
+    //Gets the date (MM/DD/YY)
+    let dateFields: Array<Substring> = formattedDate.split(separator: "/")
+    //Ensures the correct amount of fields were found and casts them from substring -> string -> int or returns 0 if casting fails
+    if(dateFields.count == 3) {
+        return (
+            month: Int(String(dateFields[0])) ?? 0,
+            day: Int(String(dateFields[1])) ?? 0,
+            year: Int("20\(String(dateFields[2]))") ?? 0
+        )
+    }
+    //Returns 0 if wrong number of date fields received
+    else {
+        return (month: 0, day: 0, year: 0)
+    }
+}
+
+
+//Helper functions
+
+
+/*
+ This function returns a boolean value denoting whether a user is logged in or not
+ Parameters:
+    User: The user state of MainView
+ Returns:
+    Bool: Boolean value denoting whether there is a user logged in
+ */
+func userIsLoggedIn(user: User) -> Bool {
+    user.username == "" ? false: true
+}
+
+
 //Extracted Subviews (high level to low level)
 
 //Pre-log in views
@@ -97,7 +173,7 @@ struct NavPreLogInView: View {
             VStack {
                 NavLogInView(user: self.$user)
                 NavRegistrationView(user: self.$user)
-            }
+            }.navigationTitle("Log In / Register").navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -125,14 +201,15 @@ struct NavRegistrationView: View {
 //Post-log in views
 struct NavPostLogInView: View {
     @Binding var user: User
+    @Binding var date: CalendarDate
     
     var body: some View {
         NavigationView {
             VStack {
                 NavLogOutView(user: self.$user)
-                NavCalendarView(user: self.$user)
-                NavJournalEntryView(user: self.$user)
-            }
+                NavCalendarView(user: self.$user, date: $date)
+                NavJournalEntryView(user: self.$user, date: $date)
+            }.navigationTitle("Navigation").navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -153,9 +230,10 @@ struct NavLogOutView: View {
 
 struct NavCalendarView: View {
     @Binding var user: User
+    @Binding var date: CalendarDate
     
     var body: some View {
-        NavigationLink(destination: CalendarView()) {
+        NavigationLink(destination: CalendarView(today: $date, user: $user)) {
             NavTextView(text: "Calendar", textColor1: user.theme.textColor, textColor2: user.theme.primaryColor, buttonColor: user.theme.secondaryColor)
         }
     }
@@ -163,9 +241,10 @@ struct NavCalendarView: View {
 
 struct NavJournalEntryView: View {
     @Binding var user: User
+    @Binding var date: CalendarDate
     
     var body: some View {
-        NavigationLink(destination: JournalEntryView()) {
+        NavigationLink(destination: JournalEntryView(today: $date)) {
             NavTextView(text: "Journal Entry", textColor1: user.theme.textColor, textColor2: user.theme.secondaryColor, buttonColor: user.theme.primaryColor)
         }
     }
