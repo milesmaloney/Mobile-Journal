@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct RegistrationView: View {
     @Binding var theme: Theme
@@ -32,7 +33,11 @@ struct RegistrationView: View {
 
 
 func createAccount(email: String, username: String, password: String, passwordConfirm: String) -> Bool{
-    return true
+    if(password == passwordConfirm) {
+        Auth.auth().createUser(withEmail: email, password: password)
+        return true
+    }
+    return false
 }
 
 

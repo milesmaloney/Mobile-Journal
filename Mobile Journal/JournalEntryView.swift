@@ -9,6 +9,7 @@ import SwiftUI
 
 struct JournalEntryView: View {
     @Binding var today: CalendarDate
+    @Binding var user: User
     
     var body: some View {
         VStack {
@@ -20,6 +21,6 @@ struct JournalEntryView: View {
 
 struct JournalEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        JournalEntryView(today: .constant(CalendarDate(day: 31, month: 12, year: 2021)))
+        JournalEntryView(today: .constant(CalendarDate(day: 31, month: 12, year: 2021)), user: .constant(defaultUser))
     }
 }
