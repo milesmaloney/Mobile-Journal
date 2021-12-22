@@ -13,7 +13,7 @@ import SwiftUI
 
 let views: Array<String> = ["Log In","Registration", "Calendar","Date", "Journal Entry","Journal Entry Confirm"]
 
-let defaultUser = User(username: "", passwordHash: "NO_PASSWORD", theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
+let defaultUser = User(username: "", theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
 
 let defaultTheme = Theme(textColor: .white, primaryColor: .cyan, secondaryColor: .orange)
 
@@ -44,7 +44,6 @@ private let dateFormatter: DateFormatter = {
 
 struct User {
     var username: String
-    var passwordHash: String
     var theme: Theme
     var journalEntries: Array<JournalEntry>
     var sliders: Array<Slider>
@@ -107,18 +106,6 @@ struct MainView: View {
 
 //Primary functions
 
-
-
-/*
- This function logs out the current user
- Parameters:
-    User (inout): the user state for the MainView which dictates the active user
- Returns:
-    None: Changes the active user state to the default user
- */
-func logOut(user: inout User) -> Void{
-    user = defaultUser
-}
 
 /*
  This function gets the month, date, and year in integer format
@@ -221,7 +208,14 @@ struct NavLogOutView: View {
     var body: some View {
         NavigationLink(destination: LogInView(user: self.$user)) {
             Button(action: {
-                logOut(user: &self.user)
+                if(logOutUser()) {
+                    /*TODO: continue to login page*/
+                }
+                else {
+                    /*
+                     TODO: throw error for failed logout
+                     */
+                }
             }) {
                 NavTextView(text: "Log Out", textColor1: user.theme.textColor, textColor2: user.theme.secondaryColor, buttonColor: user.theme.primaryColor)
             }

@@ -8,6 +8,10 @@
 import SwiftUI
 import FirebaseAuth
 
+
+//Primary View
+
+
 struct RegistrationView: View {
     @Binding var theme: Theme
     
@@ -30,15 +34,6 @@ struct RegistrationView: View {
 
 
 //Primary functions
-
-
-func createAccount(email: String, username: String, password: String, passwordConfirm: String) -> Bool{
-    if(password == passwordConfirm) {
-        Auth.auth().createUser(withEmail: email, password: password)
-        return true
-    }
-    return false
-}
 
 
 //Extracted Subviews
@@ -145,7 +140,7 @@ struct RegistrationButtonView: View {
     @Binding var theme: Theme
     
     var body: some View {
-        Button(action: {if(createAccount(email: self.email, username: self.username, password: self.password, passwordConfirm: self.passwordConfirm))
+        Button(action: {if(registerUser(email: self.email, username: self.username, password: self.password, passwordConfirm: self.passwordConfirm).success)
             {
                 //Inform user registration was successful
             }

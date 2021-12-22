@@ -20,7 +20,7 @@ import FirebaseAuth
         success: Boolean value denoting whether the registration succeeded
         errorString: A string containing any possible errors that occurred
  */
-func registerUser(email: String, password: String, passwordConfirm: String) -> (success: Bool, errorString: String) {
+func registerUser(email: String, username: String, password: String, passwordConfirm: String) -> (success: Bool, errorString: String) {
     
     var errorString: String = ""
     var success: Bool = false
@@ -31,7 +31,10 @@ func registerUser(email: String, password: String, passwordConfirm: String) -> (
                 errorString = error!.localizedDescription
             }
             else {
-                success = true
+                var newUser: User = User(username: username, theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
+                if(addUserDataToDB(user: newUser).success) {
+                    success = true
+                }
             }
         }
         return (success: success, errorString: errorString)
@@ -51,7 +54,7 @@ func registerUser(email: String, password: String, passwordConfirm: String) -> (
         success: A boolean value denoting whether the log-in succeeded
         errorString: A string containing any potential errors that occurred
  */
-func logInUser(email: String, password: String) -> (Bool, String){
+func logInUser(email: String, password: String) -> (success: Bool, errorString: String){
     
     var errorString: String = ""
     var success: Bool = false
@@ -64,7 +67,7 @@ func logInUser(email: String, password: String) -> (Bool, String){
             success = true
         }
     }
-    return (success, errorString)
+    return (success: success, errorString: errorString)
 }
 
 /*

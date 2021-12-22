@@ -28,56 +28,8 @@ struct LogInView: View {
 
 //Primary functions
 
-/*This function will return a boolean value denoting whether or not the user was successfully logged in*/
-func logIn(email: String, password: String, user: inout User) -> Bool {
-    //TODO: replace if conditional with proper log-in
-    if(email != "") {
-        user = User(username: email, passwordHash: getPasswordHash(username: email), theme: defaultUser.theme, journalEntries: defaultUser.journalEntries, sliders: defaultSliders)
-        return true
-    }
-    return false
-}
-
-//TODO: Query user data for password hash upon completion of database handler
-func getPasswordHash(username: String) -> String {
-    return defaultUser.passwordHash
-}
-
 
 //Helper functions
-
-func writeToFile(fileName: String, toWrite: [String]) -> Bool {
-    let file = fileName
-    let text = toWrite.joined()
-    if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-
-        let fileURL = dir.appendingPathComponent(file)
-
-        do {
-            try text.write(to: fileURL, atomically: false, encoding: .utf8)
-            return true
-        }
-        catch {return false}
-    }
-    return false
-}
-
-func readFromFile(fileName: String) -> String {
-    let file = fileName
-
-    if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-
-        let fileURL = dir.appendingPathComponent(file)
-        
-        do {
-            let text = try String(contentsOf: fileURL, encoding: .utf8)
-            return text
-        }
-        catch {return ""}
-    }
-    return ""
-}
-
 
 
 //Extracted subviews
@@ -141,7 +93,7 @@ struct LogInButtonView: View {
     
     var body: some View {
         Button(action: {
-            if(logIn(email: self.email, password: self.password, user: &self.user)) {
+            if(logInUser(email: self.email, password: self.password).success) {
                 //TODO: Continue to logged-in views
             }
             else {
