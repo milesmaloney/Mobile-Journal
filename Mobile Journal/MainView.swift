@@ -13,7 +13,7 @@ import SwiftUI
 
 let views: Array<String> = ["Log In","Registration", "Calendar","Date", "Journal Entry","Journal Entry Confirm"]
 
-let defaultUser = User(username: "", passwordHash: "NO_PASSWORD", theme: defaultTheme, journalEntries: [])
+let defaultUser = User(username: "", passwordHash: "NO_PASSWORD", theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
 
 let defaultTheme = Theme(textColor: .white, primaryColor: .cyan, secondaryColor: .orange)
 
@@ -47,6 +47,7 @@ struct User {
     var passwordHash: String
     var theme: Theme
     var journalEntries: Array<JournalEntry>
+    var sliders: Array<Slider>
 }
 
 struct JournalEntry {
@@ -244,7 +245,7 @@ struct NavJournalEntryView: View {
     @Binding var date: CalendarDate
     
     var body: some View {
-        NavigationLink(destination: JournalEntryView(today: $date)) {
+        NavigationLink(destination: JournalEntryView(today: $date, user: $user)) {
             NavTextView(text: "Journal Entry", textColor1: user.theme.textColor, textColor2: user.theme.secondaryColor, buttonColor: user.theme.primaryColor)
         }
     }

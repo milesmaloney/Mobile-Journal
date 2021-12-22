@@ -11,15 +11,15 @@ import CoreData
 struct LogInView: View {
     @Binding var user: User
     
-    @State var username: String = "1"
+    @State var email: String = "1"
     @State var password: String = ""
     
     var body: some View {
         VStack {
             LogInTitleView(theme: self.$user.theme)
-            LogInUsernameView(username: self.$username)
+            LogInEmailView(email: self.$email)
             LogInPasswordView(password: self.$password)
-            LogInButtonView(user: self.$user, username: self.$username, password: self.$password)
+            LogInButtonView(user: self.$user, email: self.$email, password: self.$password)
             LogInRegisterView(theme: self.$user.theme)
         }.navigationTitle("Log In").navigationBarTitleDisplayMode(.inline).padding()
     }
@@ -29,10 +29,10 @@ struct LogInView: View {
 //Primary functions
 
 /*This function will return a boolean value denoting whether or not the user was successfully logged in*/
-func logIn(username: String, password: String, user: inout User) -> Bool {
+func logIn(email: String, password: String, user: inout User) -> Bool {
     //TODO: replace if conditional with proper log-in
-    if(username != "") {
-        user = User(username: username, passwordHash: getPasswordHash(username: username), theme: defaultUser.theme, journalEntries: defaultUser.journalEntries)
+    if(email != "") {
+        user = User(username: email, passwordHash: getPasswordHash(username: email), theme: defaultUser.theme, journalEntries: defaultUser.journalEntries, sliders: defaultSliders)
         return true
     }
     return false
@@ -112,13 +112,13 @@ struct LogInTitleBGView: View {
     }
 }
 
-struct LogInUsernameView: View {
-    @Binding var username: String
+struct LogInEmailView: View {
+    @Binding var email: String
     
     var body: some View {
         HStack {
-            Text("Username:").font(.body)
-            TextField("Required", text: self.$username).disableAutocorrection(true)
+            Text("E-mail:").font(.body)
+            TextField("Required", text: self.$email).disableAutocorrection(true)
         }
     }
 }
@@ -136,12 +136,12 @@ struct LogInPasswordView: View {
 
 struct LogInButtonView: View {
     @Binding var user: User
-    @Binding var username: String
+    @Binding var email: String
     @Binding var password: String
     
     var body: some View {
         Button(action: {
-            if(logIn(username: self.username, password: self.password, user: &self.user)) {
+            if(logIn(email: self.email, password: self.password, user: &self.user)) {
                 //TODO: Continue to logged-in views
             }
             else {
