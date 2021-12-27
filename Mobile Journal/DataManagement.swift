@@ -12,7 +12,14 @@ import Foundation
 import FirebaseFirestore
 
 
+//Global constants
+
+
 let db = Firestore.firestore()
+
+
+//Primary functions
+
 
 /*
  This function adds a user to the database
