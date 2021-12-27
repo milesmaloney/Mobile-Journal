@@ -18,13 +18,13 @@ let defaultUser = User(username: "", theme: defaultTheme, journalEntries: [], sl
 let defaultTheme = Theme(textColor: .white, primaryColor: .cyan, secondaryColor: .orange)
 
 let defaultSliders = [
-    Slider(title: "Productivity", range: 10, creatorName: "default"),
-    Slider(title: "Creativity", range: 10, creatorName: "default"),
-    Slider(title: "Enjoyment", range: 10, creatorName: "default"),
-    Slider(title: "Efficiency", range: 5, creatorName: "default"),
-    Slider(title: "Social Activity", range: 5, creatorName: "default"),
-    Slider(title: "Fitness", range: 5, creatorName: "default"),
-    Slider(title: "Hygiene", range: 5, creatorName: "default")
+    SliderData(title: "Productivity", range: 10, creatorName: "default"),
+    SliderData(title: "Creativity", range: 10, creatorName: "default"),
+    SliderData(title: "Enjoyment", range: 10, creatorName: "default"),
+    SliderData(title: "Efficiency", range: 5, creatorName: "default"),
+    SliderData(title: "Social Activity", range: 5, creatorName: "default"),
+    SliderData(title: "Fitness", range: 5, creatorName: "default"),
+    SliderData(title: "Hygiene", range: 5, creatorName: "default")
 ]
 
 
@@ -46,19 +46,19 @@ struct User {
     var username: String
     var theme: Theme
     var journalEntries: Array<JournalEntry>
-    var sliders: Array<Slider>
+    var sliders: Array<SliderData>
 }
 
 struct JournalEntry {
     var day: Int
     var month: Int
     var year: Int
-    var sliders: Array<Slider>
+    var sliders: Array<SliderData>
     var sliderChoices: Array<Int>
     var description: String
 }
 
-struct Slider {
+struct SliderData {
     var title: String
     var range: Int
     var creatorName: String
