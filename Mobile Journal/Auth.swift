@@ -75,7 +75,7 @@ func logInUser(email: String, password: String) -> (success: Bool, errorString: 
  Parameters:
     None: returns the current user in the auth variable to defaults
  Returns:
-    Bool: A boolean value denoting whether or not the log-out was successful
+    Bool: A boolean value denoting whether or not the log-out was successful (only returns a bool and not a tuple because any errors thrown by this function would not be user-caused)
  */
 func logOutUser() -> Bool {
     do {
