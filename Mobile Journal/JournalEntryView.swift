@@ -27,6 +27,8 @@ struct JournalEntryView: View {
     
     var body: some View {
         ScrollView {
+            Text("\(today.month)/\(today.day)/\(String(today.year))").font(.title3).fontWeight(.semibold)
+            Spacer()
             JournalEntrySlidersView(userSliders: $user.sliders, sliderValues: $sliderValues)
             Spacer()
             JournalEntryDescriptionView(additionalDescription: $additionalDescription)
@@ -110,7 +112,7 @@ struct JournalEntryDescriptionView: View {
     @Binding var additionalDescription: String
     
     var body: some View {
-        Text("How was your day?")
+        Text("How was your day?").font(.title2)
         TextEditor(text: $additionalDescription).frame(height: 150).border(.secondary)
     }
 }
