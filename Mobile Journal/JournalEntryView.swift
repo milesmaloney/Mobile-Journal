@@ -27,7 +27,7 @@ struct JournalEntryView: View {
     
     var body: some View {
         ScrollView {
-            Text("\(today.month)/\(today.day)/\(String(today.year))").font(.title3).fontWeight(.semibold)
+            Text("\(today.month)/\(today.day)/\(String(today.year))").font(.title).fontWeight(.semibold).foregroundColor(user.theme.textColor).frame(width: 375, height: 75).background(user.theme.primaryColor)
             Spacer()
             JournalEntrySlidersView(userSliders: $user.sliders, sliderValues: $sliderValues)
             Spacer()
@@ -45,8 +45,18 @@ struct JournalEntryView: View {
 //Primary functions
 
 
-func submitJournalEntry(user: User, sliders: Array<SliderData>, values: Array<Float>, additionalDescription: String) {
-    
+/*
+ This function will submit the journal entry and add it to the calendar
+ Parameters:
+    user: The user data for the user that is currently active
+    sliders: The sliders used for the current journal entry
+    values: The values given for each slider
+    additionalDescription: The additional daily description given by the user
+ Returns:
+    Bool: A boolean value denoting whether or not the operation was successful
+ */
+func submitJournalEntry(user: User, sliders: Array<SliderData>, values: Array<Float>, additionalDescription: String) -> Bool {
+    return true
 }
 
 
@@ -70,7 +80,13 @@ struct JournalEntrySubmitButtonView: View {
     @Binding var additionalDescription: String
     
     var body: some View {
-        Button(action: { submitJournalEntry(user: user, sliders: user.sliders, values: sliderValues, additionalDescription: additionalDescription)
+        Button(action: {
+            if (submitJournalEntry(user: user, sliders: user.sliders, values: sliderValues, additionalDescription: additionalDescription)) {
+            //CONTINUE
+            }
+            else {
+               //TODO: handle error submitting journal entry
+            }
         }) {
             JournalEntrySubmitTextView(theme: $user.theme)
         }
@@ -83,7 +99,7 @@ struct JournalEntrySingleSliderView: View {
     @Binding var slider: Int
     
     var body: some View {
-        Text(userSliders[slider].title).font(.title2)
+        Text(userSliders[slider].title).font(.title2).padding(.top, 50)
         HStack {
             Text("0").foregroundColor(.gray)
             Slider(value: $sliderValues[slider], in: 0...Float(userSliders[slider].range), step: 1.0) {
@@ -101,9 +117,7 @@ struct JournalEntrySlidersView: View {
     
     var body: some View {
         ForEach(0..<userSliders.count, id: \.self) { slider in
-            Spacer()
             JournalEntrySingleSliderView(userSliders: $userSliders, sliderValues: $sliderValues, slider: .constant(slider))
-            Spacer()
         }
     }
 }
@@ -112,8 +126,8 @@ struct JournalEntryDescriptionView: View {
     @Binding var additionalDescription: String
     
     var body: some View {
-        Text("How was your day?").font(.title2)
-        TextEditor(text: $additionalDescription).frame(height: 150).border(.secondary)
+        Text("How was your day?").font(.title2).padding(.top, 25)
+        TextEditor(text: $additionalDescription).frame(height: 150).border(.secondary).padding(.bottom, 25)
     }
 }
 
