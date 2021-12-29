@@ -31,7 +31,7 @@ func registerUser(email: String, username: String, password: String, passwordCon
                 errorString = error!.localizedDescription
             }
             else {
-                var newUser: User = User(username: username, theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
+                let newUser: User = User(username: username, theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
                 if(addUserDataToDB(user: newUser).success) {
                     success = true
                 }
@@ -85,4 +85,13 @@ func logOutUser() -> Bool {
         print("Error signing out: %@", signOutError)
         return false
     }
+}
+
+
+//Debug functions
+
+
+func debugLogIn(user: inout User) -> Bool {
+    user.username = "debug"
+    return true
 }

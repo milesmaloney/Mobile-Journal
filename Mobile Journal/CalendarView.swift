@@ -275,7 +275,7 @@ struct CalendarDayView: View {
     
     var body: some View {
         if(self.day <= month.numDays) {
-            NavigationLink(destination: DateView(selectedDate: .constant(CalendarDate(day: self.day, month: self.month.number, year: self.year)))) {
+            NavigationLink(destination: DateView(selectedDate: .constant(CalendarDate(day: self.day, month: self.month.number, year: self.year)), user: self.$user)) {
                 Text("\(day)").font(.title3).foregroundColor(user.theme.textColor).frame(width: 35, height: 35).background(getDateColor(day: self.day, month: self.month.number, year: self.year, today: self.today, user: self.user)).cornerRadius(30.0)
             }
         }

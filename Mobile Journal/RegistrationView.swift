@@ -148,7 +148,7 @@ struct RegistrationButtonView: View {
                 //Inform user registration was unsuccessful
             }
         }) {
-            Text("Create Account").font(.headline).fontWeight(.bold).frame(width: 200, height: 50).foregroundColor(self.theme.textColor).background(self.theme.secondaryColor).cornerRadius(10.0)
+            ButtonView(text: .constant("Create Account"), tc1: self.$theme.textColor, tc2: self.$theme.primaryColor, bgc: self.$theme.secondaryColor)
         }
     }
 }
