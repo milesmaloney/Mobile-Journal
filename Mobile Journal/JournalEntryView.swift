@@ -27,14 +27,13 @@ struct JournalEntryView: View {
     
     var body: some View {
         ScrollView {
-            Text("\(today.month)/\(today.day)/\(String(today.year))").font(.title).fontWeight(.semibold).foregroundColor(user.theme.textColor).frame(width: 375, height: 75).background(user.theme.primaryColor)
+            DateHeaderView(date: self.$today, tc1: self.$user.theme.textColor, tc2: self.$user.theme.primaryColor, bgc: self.$user.theme.secondaryColor)
             Spacer()
-            JournalEntrySlidersView(userSliders: $user.sliders, sliderValues: $sliderValues)
+            JournalEntrySlidersView(userSliders: self.$user.sliders, sliderValues: self.$sliderValues, theme: self.$user.theme)
             Spacer()
-            JournalEntryDescriptionView(additionalDescription: $additionalDescription)
-            
+            JournalEntryDescriptionView(additionalDescription: self.$additionalDescription, tc:  self.$user.theme.textColor, stc: self.$user.theme.secondaryColor)
             Spacer()
-            JournalEntrySubmitButtonView(user: $user, sliderValues: $sliderValues, additionalDescription: $additionalDescription)
+            JournalEntrySubmitButtonView(date: self.$today, user: self.$user, sliderValues: self.$sliderValues, additionalDescription: self.$additionalDescription)
             Spacer()
         }.frame(width: 350).navigationTitle("Journal Entry").navigationBarTitleDisplayMode(.inline)
         
@@ -45,50 +44,31 @@ struct JournalEntryView: View {
 //Primary functions
 
 
-/*
- This function will submit the journal entry and add it to the calendar
- Parameters:
-    user: The user data for the user that is currently active
-    sliders: The sliders used for the current journal entry
-    values: The values given for each slider
-    additionalDescription: The additional daily description given by the user
- Returns:
-    Bool: A boolean value denoting whether or not the operation was successful
- */
-func submitJournalEntry(user: User, sliders: Array<SliderData>, values: Array<Float>, additionalDescription: String) -> Bool {
-    return true
+//Helper functions
+
+
+func getNoBGTextColor(tc: Color) -> Binding<Color> {
+    if(tc == .white) {
+        return .constant(.black)
+    }
+    else {
+        return .constant(tc)
+    }
 }
 
 
 //Extracted Subviews
 
 
-struct JournalEntrySubmitTextView: View {
-    @Binding var theme: Theme
-    
-    var body: some View {
-        ZStack {
-            Text("Submit").font(.largeTitle).fontWeight(.bold).frame(width: 250, height: 100).foregroundColor(theme.primaryColor).background(theme.secondaryColor).cornerRadius(20.0)
-            Text("Submit").font(.largeTitle).fontWeight(.semibold).frame(width: 250, height: 100).foregroundColor(theme.textColor)
-        }
-    }
-}
-
 struct JournalEntrySubmitButtonView: View {
+    @Binding var date: CalendarDate
     @Binding var user: User
     @Binding var sliderValues: Array<Float>
     @Binding var additionalDescription: String
     
     var body: some View {
-        Button(action: {
-            if (submitJournalEntry(user: user, sliders: user.sliders, values: sliderValues, additionalDescription: additionalDescription)) {
-            //CONTINUE
-            }
-            else {
-               //TODO: handle error submitting journal entry
-            }
-        }) {
-            JournalEntrySubmitTextView(theme: $user.theme)
+        NavigationLink(destination: JournalEntryConfirmationView(date: self.$date, user: self.$user, values: self.$sliderValues, description: self.$additionalDescription)) {
+            ButtonView(text: .constant("Submit Entry"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
         }
     }
 }
@@ -97,36 +77,40 @@ struct JournalEntrySingleSliderView: View {
     @Binding var userSliders: Array<SliderData>
     @Binding var sliderValues: Array<Float>
     @Binding var slider: Int
+    @Binding var theme: Theme
     
     var body: some View {
-        Text(userSliders[slider].title).font(.title2).padding(.top, 50)
+        ShadowTextView(text:  self.$userSliders[slider].title, tc: getNoBGTextColor(tc: self.theme.textColor), stc: self.$theme.primaryColor, fontType: .constant(.title2)).padding(.top, 50)
         HStack {
             Text("0").foregroundColor(.gray)
-            Slider(value: $sliderValues[slider], in: 0...Float(userSliders[slider].range), step: 1.0) {
+            Slider(value: self.$sliderValues[slider], in: 0...Float(self.userSliders[slider].range), step: 1.0) {
             }.frame(width: 250, height: 20)
-            Text("\(String(userSliders[slider].range))").foregroundColor(.gray)
+            Text("\(String(self.userSliders[slider].range))").foregroundColor(.gray)
         }
-        Text("\(Int(sliderValues[slider]))")
+        Text("\(Int(self.sliderValues[slider]))")
     }
 }
 
 struct JournalEntrySlidersView: View {
     @Binding var userSliders: Array<SliderData>
     @Binding var sliderValues: Array<Float>
+    @Binding var theme: Theme
     
     
     var body: some View {
-        ForEach(0..<userSliders.count, id: \.self) { slider in
-            JournalEntrySingleSliderView(userSliders: $userSliders, sliderValues: $sliderValues, slider: .constant(slider))
+        ForEach(0..<self.userSliders.count, id: \.self) { slider in
+            JournalEntrySingleSliderView(userSliders: self.$userSliders, sliderValues: self.$sliderValues, slider: .constant(slider), theme: self.$theme)
         }
     }
 }
 
 struct JournalEntryDescriptionView: View {
     @Binding var additionalDescription: String
+    @Binding var tc: Color
+    @Binding var stc: Color
     
     var body: some View {
-        Text("How was your day?").font(.title2).padding(.top, 25)
+        ShadowTextView(text: .constant("How was your day?"), tc: getNoBGTextColor(tc: self.tc), stc: self.$stc, fontType: .constant(.title2)).padding(.top, 25)
         TextEditor(text: $additionalDescription).frame(height: 150).border(.secondary).padding(.bottom, 25)
     }
 }
@@ -141,3 +125,5 @@ struct JournalEntryView_Previews: PreviewProvider {
         JournalEntryView(today: .constant(CalendarDate(day: 31, month: 12, year: 2021)), user: .constant(defaultUser))
     }
 }
+
+

@@ -171,7 +171,7 @@ struct NavLogInView: View {
     
     var body: some View {
         NavigationLink(destination: LogInView(user: self.$user)) {
-            NavTextView(text: "Log In", textColor1: self.user.theme.textColor, textColor2: self.user.theme.secondaryColor, buttonColor: self.user.theme.primaryColor)
+            ButtonView(text: .constant("Log In"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
         }
     }
 }
@@ -181,7 +181,7 @@ struct NavRegistrationView: View {
     
     var body: some View {
         NavigationLink(destination: RegistrationView(theme: self.$user.theme)) {
-            NavTextView(text: "Register", textColor1: self.user.theme.textColor, textColor2: self.user.theme.primaryColor, buttonColor: self.user.theme.secondaryColor)
+            ButtonView(text: .constant("Register"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.primaryColor, bgc: self.$user.theme.secondaryColor)
         }
     }
 }
@@ -195,8 +195,8 @@ struct NavPostLogInView: View {
         NavigationView {
             VStack {
                 NavLogOutView(user: self.$user)
-                NavCalendarView(user: self.$user, date: $date)
-                NavJournalEntryView(user: self.$user, date: $date)
+                NavCalendarView(user: self.$user, date: self.$date)
+                NavJournalEntryView(user: self.$user, date: self.$date)
             }.navigationTitle("Navigation").navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -217,7 +217,7 @@ struct NavLogOutView: View {
                      */
                 }
             }) {
-                NavTextView(text: "Log Out", textColor1: user.theme.textColor, textColor2: user.theme.secondaryColor, buttonColor: user.theme.primaryColor)
+                ButtonView(text: .constant("Log Out"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
             }
         }
     }
@@ -228,8 +228,8 @@ struct NavCalendarView: View {
     @Binding var date: CalendarDate
     
     var body: some View {
-        NavigationLink(destination: CalendarView(today: $date, user: $user)) {
-            NavTextView(text: "Calendar", textColor1: user.theme.textColor, textColor2: user.theme.primaryColor, buttonColor: user.theme.secondaryColor)
+        NavigationLink(destination: CalendarView(today: self.$date, user: self.$user)) {
+            ButtonView(text: .constant("Calendar"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.primaryColor, bgc: self.$user.theme.secondaryColor)
         }
     }
 }
@@ -239,23 +239,8 @@ struct NavJournalEntryView: View {
     @Binding var date: CalendarDate
     
     var body: some View {
-        NavigationLink(destination: JournalEntryView(today: $date, user: $user)) {
-            NavTextView(text: "Journal Entry", textColor1: user.theme.textColor, textColor2: user.theme.secondaryColor, buttonColor: user.theme.primaryColor)
-        }
-    }
-}
-
-//General views
-struct NavTextView: View {
-    var text: String
-    var textColor1: Color
-    var textColor2: Color
-    var buttonColor: Color
-    
-    var body: some View {
-        ZStack {
-            Text("\(text)").font(.largeTitle).fontWeight(.bold).foregroundColor(textColor2).frame(width: 300, height: 100).background(buttonColor).cornerRadius(10.0)
-            Text("\(text)").font(.largeTitle).fontWeight(.semibold).foregroundColor(textColor1)
+        NavigationLink(destination: JournalEntryView(today: self.$date, user: self.$user)) {
+            ButtonView(text: .constant("Journal Entry"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
         }
     }
 }

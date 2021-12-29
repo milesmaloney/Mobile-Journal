@@ -93,14 +93,14 @@ struct LogInButtonView: View {
     
     var body: some View {
         Button(action: {
-            if(logInUser(email: self.email, password: self.password).success) {
+            if(debugLogIn(user: &user))/*RETURN THIS LINE OF CODE WHEN DB IS FULLY ACTIVE:logInUser(email: self.email, password: self.password).success)*/ {
                 //TODO: Continue to logged-in views
             }
             else {
                 //TODO: Throw an error and edit the page accordingly
             }
         }) {
-            Text("Log In").font(.headline).fontWeight(.bold).frame(width: 200, height: 50).foregroundColor(self.user.theme.textColor).background(self.user.theme.primaryColor).cornerRadius(10.0).padding(.top, 20)
+            ButtonView(text: .constant("Log In"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
         }
         
     }

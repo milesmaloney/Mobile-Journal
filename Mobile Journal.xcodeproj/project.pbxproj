@@ -56,6 +56,7 @@
 		F1623A562772913100A19B4B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A552772913100A19B4B /* Auth.swift */; };
 		F1623A572772913100A19B4B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A552772913100A19B4B /* Auth.swift */; };
 		F1623A582772913100A19B4B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A552772913100A19B4B /* Auth.swift */; };
+		F1623A5A277D01F300A19B4B /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A59277D01F300A19B4B /* ReusableViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		F1623A1827724C4200A19B4B /* DataManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagement.swift; sourceTree = "<group>"; };
 		F1623A1C277288E700A19B4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../.Trash/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F1623A552772913100A19B4B /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		F1623A59277D01F300A19B4B /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,18 +176,19 @@
 		F119BD3A276918A9008CEEBF /* Mobile Journal */ = {
 			isa = PBXGroup;
 			children = (
-				F1623A552772913100A19B4B /* Auth.swift */,
-				F140F304276BE9CF0049D1FE /* JournalEntryView.swift */,
-				F1227288276BE8A5007B730D /* DateView.swift */,
-				F122728A276BE8DD007B730D /* JournalEntryConfirmationView.swift */,
-				F11816C0276A717B00920730 /* CalendarView.swift */,
-				F1623A1827724C4200A19B4B /* DataManagement.swift */,
 				F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */,
+				F11816C2276BC6D300920730 /* MainView.swift */,
 				F119BD3D276918A9008CEEBF /* LogInView.swift */,
 				F119BD6E27695107008CEEBF /* RegistrationView.swift */,
-				F119BD3F276918B1008CEEBF /* Assets.xcassets */,
-				F11816C2276BC6D300920730 /* MainView.swift */,
+				F11816C0276A717B00920730 /* CalendarView.swift */,
+				F1227288276BE8A5007B730D /* DateView.swift */,
+				F140F304276BE9CF0049D1FE /* JournalEntryView.swift */,
+				F122728A276BE8DD007B730D /* JournalEntryConfirmationView.swift */,
+				F1623A59277D01F300A19B4B /* ReusableViews.swift */,
+				F1623A552772913100A19B4B /* Auth.swift */,
+				F1623A1827724C4200A19B4B /* DataManagement.swift */,
 				F119BD44276918B1008CEEBF /* Persistence.swift */,
+				F119BD3F276918B1008CEEBF /* Assets.xcassets */,
 				F119BD46276918B1008CEEBF /* Mobile_Journal.xcdatamodeld */,
 				F1623A1C277288E700A19B4B /* GoogleService-Info.plist */,
 				F11816C4276BD68800920730 /* Mobile Journal Architecture.drawio */,
@@ -395,6 +398,7 @@
 				F1227289276BE8A5007B730D /* DateView.swift in Sources */,
 				F119BD3C276918A9008CEEBF /* Mobile_JournalApp.swift in Sources */,
 				F119BD6F27695107008CEEBF /* RegistrationView.swift in Sources */,
+				F1623A5A277D01F300A19B4B /* ReusableViews.swift in Sources */,
 				F1623A562772913100A19B4B /* Auth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
