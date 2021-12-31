@@ -57,6 +57,7 @@
 		F1623A572772913100A19B4B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A552772913100A19B4B /* Auth.swift */; };
 		F1623A582772913100A19B4B /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A552772913100A19B4B /* Auth.swift */; };
 		F1623A5A277D01F300A19B4B /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A59277D01F300A19B4B /* ReusableViews.swift */; };
+		F1623A5C277FAB8B00A19B4B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1623A5B277FAB8A00A19B4B /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		F1623A1C277288E700A19B4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../.Trash/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F1623A552772913100A19B4B /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		F1623A59277D01F300A19B4B /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
+		F1623A5B277FAB8A00A19B4B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		F119BD3A276918A9008CEEBF /* Mobile Journal */ = {
 			isa = PBXGroup;
 			children = (
+				F1623A5B277FAB8A00A19B4B /* SettingsView.swift */,
 				F119BD3B276918A9008CEEBF /* Mobile_JournalApp.swift */,
 				F11816C2276BC6D300920730 /* MainView.swift */,
 				F119BD3D276918A9008CEEBF /* LogInView.swift */,
@@ -394,6 +397,7 @@
 				F122728B276BE8DD007B730D /* JournalEntryConfirmationView.swift in Sources */,
 				F11816C1276A717B00920730 /* CalendarView.swift in Sources */,
 				F1623A1927724C4200A19B4B /* DataManagement.swift in Sources */,
+				F1623A5C277FAB8B00A19B4B /* SettingsView.swift in Sources */,
 				F119BD3E276918A9008CEEBF /* LogInView.swift in Sources */,
 				F1227289276BE8A5007B730D /* DateView.swift in Sources */,
 				F119BD3C276918A9008CEEBF /* Mobile_JournalApp.swift in Sources */,
