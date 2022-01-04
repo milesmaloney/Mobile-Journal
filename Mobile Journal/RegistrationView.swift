@@ -75,7 +75,7 @@ struct RegistrationEmailView: View {
     var body: some View {
         HStack {
             Text("E-mail:")
-            TextField("Required", text: self.$email).disableAutocorrection(true)
+            TextField("Required", text: self.$email).disableAutocorrection(true).autocapitalization(.none)
         }.padding(.horizontal)
     }
 }
@@ -86,19 +86,26 @@ struct RegistrationUsernameView: View {
     var body: some View {
         HStack {
             Text("Username:")
-            TextField("Required", text: self.$username).disableAutocorrection(true)
+            TextField("Required", text: self.$username).disableAutocorrection(true).autocapitalization(.none)
         }.padding(.horizontal)
     }
 }
 
 struct RegistrationPasswordView: View {
     @Binding var password: String
+    @State var isHidden: Bool = true
     
     var body: some View {
         VStack {
             HStack {
                 Text("Password:")
-                TextField("Required (8+ characters, 1 uppercase character, 1 lowercase character)", text: self.$password)
+                if(isHidden) {
+                    SecureField("Required (8+ characters, 1 uppercase character, 1 lowercase character)", text: self.$password).disableAutocorrection(true).autocapitalization(.none)
+                }
+                else {
+                    TextField("Required (8+ characters, 1 uppercase character, 1 lowercase character)", text: self.$password).disableAutocorrection(true).autocapitalization(.none)
+                }
+                HiddenButtonView(bool: self.$isHidden)
             }.padding(.horizontal)
             RegistrationPasswordFootnoteView()
         }
@@ -113,12 +120,19 @@ struct RegistrationPasswordFootnoteView: View {
 
 struct RegistrationConfirmPWView: View {
     @Binding var passwordConfirm: String
+    @State var isHidden: Bool = true
     
     var body: some View {
         VStack {
             HStack {
                 Text("Confirm Password:")
-                TextField("Required", text: self.$passwordConfirm)
+                if(isHidden) {
+                    SecureField("Required", text: self.$passwordConfirm).disableAutocorrection(true).autocapitalization(.none)
+                }
+                else {
+                    TextField("Required", text: self.$passwordConfirm).disableAutocorrection(true).autocapitalization(.none)
+                }
+                HiddenButtonView(bool: self.$isHidden)
             }.padding(.horizontal)
             RegistrationConfirmPWFootnoteView()
         }
@@ -161,5 +175,3 @@ struct RegistrationView_Previews: PreviewProvider {
         RegistrationView(theme: .constant(defaultTheme))
     }
 }
-
-

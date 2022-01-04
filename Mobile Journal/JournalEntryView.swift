@@ -35,8 +35,9 @@ struct JournalEntryView: View {
             Spacer()
             JournalEntrySubmitButtonView(date: self.$today, user: self.$user, sliderValues: self.$sliderValues, additionalDescription: self.$additionalDescription)
             Spacer()
-        }.frame(width: 350).navigationTitle("Journal Entry").navigationBarTitleDisplayMode(.inline)
-        
+        }.frame(width: 350).navigationTitle("Journal Entry").navigationBarTitleDisplayMode(.inline).toolbar {
+            NavBarSettingsView(user: self.$user)
+        }
     }
 }
 

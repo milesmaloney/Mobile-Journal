@@ -24,7 +24,9 @@ struct JournalEntryConfirmationView: View {
             ConfirmSliderValuesView(sliders: self.$user.sliders, values: self.$values, theme: self.$user.theme)
             JournalEntryDescriptionView(additionalDescription: self.$description, tc: self.$user.theme.textColor, stc: self.$user.theme.primaryColor)
             ConfirmEntryButtonView(user: self.$user, values: self.$values, description: self.$description)
-        }.frame(width: 350).navigationTitle("Journal Entry Confirmation").navigationBarTitleDisplayMode(.inline)
+        }.frame(width: 350).navigationTitle("Journal Entry Confirmation").navigationBarTitleDisplayMode(.inline).toolbar {
+            NavBarSettingsView(user: self.$user)
+        }
     }
 }
 

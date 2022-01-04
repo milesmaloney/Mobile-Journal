@@ -17,7 +17,9 @@ struct DateView: View {
             Spacer()
             Text("You have selected \(selectedDate.month)/\(selectedDate.day)/\(String(selectedDate.year))")
             Spacer()
-        }.navigationTitle("\(selectedDate.month)/\(selectedDate.day)/\(String(selectedDate.year))").navigationBarTitleDisplayMode(.inline)
+        }.navigationTitle("\(selectedDate.month)/\(selectedDate.day)/\(String(selectedDate.year))").navigationBarTitleDisplayMode(.inline).toolbar {
+            NavBarSettingsView(user: self.$user)
+        }
     }
 }
 

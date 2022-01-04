@@ -11,7 +11,7 @@ import CoreData
 struct LogInView: View {
     @Binding var user: User
     
-    @State var email: String = "1"
+    @State var email: String = ""
     @State var password: String = ""
     
     var body: some View {
@@ -70,18 +70,25 @@ struct LogInEmailView: View {
     var body: some View {
         HStack {
             Text("E-mail:").font(.body)
-            TextField("Required", text: self.$email).disableAutocorrection(true)
+            TextField("Required", text: self.$email).disableAutocorrection(true).autocapitalization(.none)
         }
     }
 }
 
 struct LogInPasswordView: View {
     @Binding var password: String
+    @State var isHidden: Bool = true
     
     var body: some View {
         HStack {
             Text("Password: ").font(.body)
-            TextField("Required", text: self.$password).disableAutocorrection(true)
+            if(isHidden) {
+                SecureField("Required", text: self.$password).disableAutocorrection(true).autocapitalization(.none)
+            }
+            else {
+                TextField("Required", text: self.$password).disableAutocorrection(true).autocapitalization(.none)
+            }
+            HiddenButtonView(bool: self.$isHidden)
         }
     }
 }
@@ -120,6 +127,8 @@ struct LogInRegisterView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView(user: .constant(defaultUser)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).previewInterfaceOrientation(.portrait)
+        Group {
+            LogInView(user: .constant(defaultUser)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).previewInterfaceOrientation(.portrait)
+        }
     }
 }
