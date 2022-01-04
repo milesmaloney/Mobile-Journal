@@ -13,7 +13,7 @@ import SwiftUI
 
 let views: Array<String> = ["Log In","Registration", "Calendar","Date", "Journal Entry","Journal Entry Confirm"]
 
-let defaultUser = User(username: "", theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
+let defaultUser = User(username: "default", theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
 
 let defaultTheme = Theme(textColor: .white, primaryColor: .cyan, secondaryColor: .orange)
 
@@ -146,7 +146,7 @@ func getDateToday(formattedDate: String) -> (month: Int, day: Int, year: Int) {
     Bool: Boolean value denoting whether there is a user logged in
  */
 func userIsLoggedIn(user: User) -> Bool {
-    user.username == "" ? false: true
+    user.username == "default" ? false: true
 }
 
 
@@ -197,7 +197,10 @@ struct NavPostLogInView: View {
                 NavLogOutView(user: self.$user)
                 NavCalendarView(user: self.$user, date: self.$date)
                 NavJournalEntryView(user: self.$user, date: self.$date)
-            }.navigationTitle("Navigation").navigationBarTitleDisplayMode(.inline)
+                NavSettingsView(user: self.$user)
+            }.navigationTitle("Navigation").navigationBarTitleDisplayMode(.inline).toolbar {
+                NavBarSettingsView(user: self.$user)
+            }
         }
     }
 }
@@ -208,7 +211,7 @@ struct NavLogOutView: View {
     var body: some View {
         NavigationLink(destination: LogInView(user: self.$user)) {
             Button(action: {
-                if(logOutUser()) {
+                if(debugLogOut(user: &self.user)) {
                     /*TODO: continue to login page*/
                 }
                 else {
@@ -241,6 +244,16 @@ struct NavJournalEntryView: View {
     var body: some View {
         NavigationLink(destination: JournalEntryView(today: self.$date, user: self.$user)) {
             ButtonView(text: .constant("Journal Entry"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
+        }
+    }
+}
+
+struct NavSettingsView: View {
+    @Binding var user: User
+    
+    var body: some View {
+        NavigationLink(destination: SettingsView(user: self.$user)) {
+            ButtonView(text: .constant("Settings"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.primaryColor, bgc: self.$user.theme.secondaryColor)
         }
     }
 }

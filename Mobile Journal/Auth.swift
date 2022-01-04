@@ -95,3 +95,8 @@ func debugLogIn(user: inout User) -> Bool {
     user.username = "debug"
     return true
 }
+
+func debugLogOut(user: inout User) -> Bool {
+    user = defaultUser
+    return true
+}

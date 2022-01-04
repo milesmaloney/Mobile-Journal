@@ -61,6 +61,38 @@ struct ButtonView: View {
     }
 }
 
+//This view creates a red & white x button to denote deletions or cancellations
+struct DeleteButtonView: View {
+    var body: some View {
+        Text("X").font(.title).foregroundColor(.white).frame(width: 30, height: 30).background(.red).cornerRadius(20.0)
+    }
+}
+
+//This view creates a navigation toolbar item that leads to the settings page
+struct NavBarSettingsView: View {
+    @Binding var user: User
+    
+    var body: some View {
+        NavigationLink(destination: SettingsView(user: self.$user)) {
+            Image("settingsGear").resizable().aspectRatio(contentMode: .fit)
+        }.frame(width: 50)
+    }
+}
+
+//This view creates an eye that toggles an isHidden boolean value on/off
+struct HiddenButtonView: View {
+    @Binding var bool: Bool
+    
+    var body: some View {
+        Button(action: {
+            //Toggles isHidden boolean
+            bool = bool ? false : true
+        }) {
+            Image("passwordEye").resizable().frame(width: 30, height: 20).aspectRatio(contentMode: .fit)
+        }
+    }
+}
+
 
 //Debug functions
 
@@ -71,6 +103,8 @@ struct ReusableViews_Previews: PreviewProvider {
             DateHeaderView(date: .constant(CalendarDate(day: 31, month: 12, year: 2021)), tc1: .constant(.white), tc2: .constant(.orange), bgc: .constant(.cyan))
             ShadowTextView(text: .constant("Shadow Text"), tc: .constant(.white), stc: .constant(.cyan), fontType: .constant(.title2))
             ButtonView(text: .constant("Button"), tc1: .constant(.white), tc2: .constant(.cyan), bgc: .constant(.orange))
+            DeleteButtonView()
+            NavBarSettingsView(user: .constant(defaultUser))
         }
     }
 }

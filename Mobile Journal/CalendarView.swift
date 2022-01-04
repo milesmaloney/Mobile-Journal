@@ -56,11 +56,13 @@ struct CalendarView: View {
     
     var body: some View {
         VStack {
-            CalendarMonthAndYearView(monthName: self.$selectedMonth.name, year: self.$selectedYear, theme: self.$user.theme)
+            CalendarMonthAndYearView(monthName: self.$selectedMonth.name, year: self.$selectedYear, theme: self.$user.theme).padding(.top, 20)
             Spacer()
             CalendarMonthView(month: self.$selectedMonth, year: self.$selectedYear, today: self.$today, user: self.$user)
             Spacer()
-        }.navigationTitle("Calendar").navigationBarTitleDisplayMode(.inline)
+        }.navigationTitle("Calendar").navigationBarTitleDisplayMode(.inline).toolbar {
+            NavBarSettingsView(user: self.$user)
+        }
     }
 }
 
