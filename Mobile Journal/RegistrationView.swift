@@ -15,10 +15,10 @@ import FirebaseAuth
 struct RegistrationView: View {
     @Binding var theme: Theme
     
-    @State var email: String = ""
-    @State var username: String = ""
-    @State var password: String = ""
-    @State var passwordConfirm: String = ""
+    @State var email: String = "milesm99@gmail.com"
+    @State var username: String = "milesm99"
+    @State var password: String = "sprint77MKM"
+    @State var passwordConfirm: String = "sprint77MKM"
     
     var body: some View {
         VStack {
@@ -152,14 +152,21 @@ struct RegistrationButtonView: View {
     @Binding var password: String
     @Binding var passwordConfirm: String
     @Binding var theme: Theme
+    @State var alertIsPresented: Bool = false
+    @State var alert: Alert = Alert(title: Text("Error"), message: Text("ERROR: Registration was not yet expected. Please restart your app and try again."))
     
     var body: some View {
         Button(action: {if(registerUser(email: self.email, username: self.username, password: self.password, passwordConfirm: self.passwordConfirm).success)
             {
                 //Inform user registration was successful
+                self.alert = Alert(title: Text("User registration was successful!"), message: Text("\(self.username) was successfully registered to the e-mail \(self.email)!"))
+                self.alertIsPresented = true
             }
             else {
                 //Inform user registration was unsuccessful
+                self.alert = Alert(title: Text("User registration failed."), message: Text("User registration failed. Please try again. If issue persists, try restarting your app."))
+                self.alertIsPresented = true
+                
             }
         }) {
             ButtonView(text: .constant("Create Account"), tc1: self.$theme.textColor, tc2: self.$theme.primaryColor, bgc: self.$theme.secondaryColor)

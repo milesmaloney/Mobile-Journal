@@ -23,7 +23,7 @@ struct JournalEntryConfirmationView: View {
             DateHeaderView(date: self.$date, tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
             ConfirmSliderValuesView(sliders: self.$user.sliders, values: self.$values, theme: self.$user.theme)
             JournalEntryDescriptionView(additionalDescription: self.$description, tc: self.$user.theme.textColor, stc: self.$user.theme.primaryColor)
-            ConfirmEntryButtonView(user: self.$user, values: self.$values, description: self.$description)
+            ConfirmEntryButtonView(user: self.$user, values: self.$values, description: self.$description, date: self.$date)
         }.frame(width: 350).navigationTitle("Journal Entry Confirmation").navigationBarTitleDisplayMode(.inline).toolbar {
             NavBarSettingsView(user: self.$user)
         }
@@ -72,17 +72,26 @@ struct ConfirmEntryButtonView: View {
     @Binding var user: User
     @Binding var values: Array<Float>
     @Binding var description: String
+    @Binding var date: CalendarDate
+    @State var alertIsPresented: Bool = false
+    @State var alert: Alert = Alert(title: Text("Error"), message: Text("ERROR: Unexpected Entry Confirmation without submission. Please restart your app and try again."))
     
     var body: some View {
         Button(action: {
             if(submitJournalEntry(user: self.user, sliders: self.user.sliders, values: self.values, additionalDescription: self.description )) {
                 //Return to calendar
+                self.alert = Alert(title: Text("Journal Entry Submitted"), message: Text("You have submitted your journal entry for \(self.date.month)/\(self.date.day)/\(self.date.year)"))
+                self.alertIsPresented = true
             }
             else {
                 //Throw error
+                self.alert = Alert(title: Text("Journal Entry Submission failed"), message: Text("Something went wrong while submitting your journal entry. Please restart the app and try again."))
+                self.alertIsPresented = true
             }
         }) {
             ButtonView(text: .constant("Confirm Entry"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.primaryColor, bgc: self.$user.theme.secondaryColor)
+        }.alert(isPresented: self.alertIsPresented) {
+            self.alert
         }
     }
 }

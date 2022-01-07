@@ -91,7 +91,10 @@ func logOutUser() -> Bool {
 //Debug functions
 
 
-func debugLogIn(user: inout User) -> Bool {
+func debugLogIn(email: String, password: String, user: inout User) -> Bool {
+    if(email == "" && password == "") {
+        return false
+    }
     user.username = "debug"
     return true
 }

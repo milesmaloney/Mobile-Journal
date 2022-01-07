@@ -97,17 +97,25 @@ struct LogInButtonView: View {
     @Binding var user: User
     @Binding var email: String
     @Binding var password: String
+    @State var alertIsPresented: Bool = false
+    @State var alert: Alert = Alert(title: Text("Error"), message: Text("ERROR: Log-in not yet attempted. Please restart the app and try again."))
     
     var body: some View {
         Button(action: {
-            if(debugLogIn(user: &user))/*RETURN THIS LINE OF CODE WHEN DB IS FULLY ACTIVE:logInUser(email: self.email, password: self.password).success)*/ {
+            if(debugLogIn(email: self.email, password: self.password, user: &self.user))/*RETURN THIS LINE OF CODE WHEN DB IS FULLY ACTIVE:logInUser(email: self.email, password: self.password).success)*/ {
+                alert = Alert(title: Text("Log-in Successful"), message: Text("You have logged in successfully!"))
+                alertIsPresented = true
                 //TODO: Continue to logged-in views
             }
             else {
                 //TODO: Throw an error and edit the page accordingly
+                alert = Alert(title: Text("Log-in failed"), message: Text("E-mail or password is incorrect."))
+                alertIsPresented = true
             }
         }) {
             ButtonView(text: .constant("Log In"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
+        }.alert(isPresented: self.$alertIsPresented) {
+            alert
         }
         
     }

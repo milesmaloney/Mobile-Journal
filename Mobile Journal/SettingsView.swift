@@ -224,17 +224,25 @@ struct SettingsApplyButtonView: View {
     @Binding var user: User
     @Binding var newUser: User
     @Binding var newSliders: Array<SliderString>
+    @State var alertIsPresented: Bool = false
+    @State var alert: Alert = Alert(title: Text("Error"), message: Text("ERROR: Unexpected apply settings submission without user submission."))
     
     var body: some View {
         Button(action: {
             if(applySettingsChanges(user: &self.user, newUser: self.newUser, newSliders: self.newSliders)) {
                 //Return to previous page
+                self.alert = Alert(title: Text("Settings Applied"), message: Text("New settings applied for \(self.user.username)"))
+                self.alertIsPresented = true
             }
             else {
                 //Inform user of error
+                self.alert = Alert(title: Text("Failed to Apply Settings"), message: Text("ERROR: Settings could not be applied. Please restart your app and try again."))
+                self.alertIsPresented = true
             }
         }) {
             ButtonView(text: .constant("Apply Changes"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor).padding(.top, 50).padding(.bottom, 10)
+        }.alert(isPresented: self.$alertIsPresented) {
+            self.alert
         }
     }
 }
