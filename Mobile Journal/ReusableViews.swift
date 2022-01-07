@@ -86,9 +86,9 @@ struct HiddenButtonView: View {
     var body: some View {
         Button(action: {
             //Toggles isHidden boolean
-            bool = bool ? false : true
+            self.bool = self.bool ? false : true
         }) {
-            Image("passwordEye").resizable().frame(width: 30, height: 20).aspectRatio(contentMode: .fit)
+            Image("\(self.bool ? "passwordEyeGray" : "passwordEye")").resizable().frame(width: 30, height: 20).aspectRatio(contentMode: .fit)
         }
     }
 }
