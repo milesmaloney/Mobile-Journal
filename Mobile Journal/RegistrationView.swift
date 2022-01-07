@@ -15,10 +15,10 @@ import FirebaseAuth
 struct RegistrationView: View {
     @Binding var theme: Theme
     
-    @State var email: String = "milesm99@gmail.com"
-    @State var username: String = "milesm99"
-    @State var password: String = "sprint77MKM"
-    @State var passwordConfirm: String = "sprint77MKM"
+    @State var email: String = ""
+    @State var username: String = ""
+    @State var password: String = ""
+    @State var passwordConfirm: String = ""
     
     var body: some View {
         VStack {
