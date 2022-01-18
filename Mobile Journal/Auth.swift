@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseAuth
 
 
@@ -22,20 +23,19 @@ import FirebaseAuth
  */
 func registerUser(email: String, username: String, password: String, passwordConfirm: String) -> (success: Bool, errorString: String) {
     
-    var errorString: String = ""
-    var success: Bool = false
+    var errorString: String = "False error"
+    var success: Bool = true
     
     if(password == passwordConfirm) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if(error != nil) {
+            guard let user = authResult?.user, error == nil else {
                 errorString = error!.localizedDescription
+                success = false
+                return
             }
-            else {
-                let newUser: User = User(username: username, theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
-                if(addUserDataToDB(user: newUser).success) {
-                    success = true
-                }
-            }
+            let newUser: User = User(username: username, theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
+            //if(addUserDataToDB(user: newUser).success) {
+            //}
         }
         return (success: success, errorString: errorString)
     }
@@ -56,18 +56,33 @@ func registerUser(email: String, username: String, password: String, passwordCon
  */
 func logInUser(email: String, password: String) -> (success: Bool, errorString: String){
     
-    var errorString: String = ""
-    var success: Bool = false
+    var errorString: String = "False error"
+    var success: Bool = true
     
     Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-        if(error != nil) {
+        guard let user = authResult?.user, error == nil else {
             errorString = error!.localizedDescription
-        }
-        else {
-            success = true
+            success = false
+            return
         }
     }
     return (success: success, errorString: errorString)
+}
+
+/*
+ This function returns a boolean value denoting whether a user is logged in or not
+ Parameters:
+    User: The user state of MainView
+ Returns:
+    Bool: Boolean value denoting whether there is a user logged in
+ */
+func userIsLoggedIn() -> Bool {
+    if Auth.auth().currentUser != nil {
+        return true
+    }
+    else {
+        return false
+    }
 }
 
 /*
@@ -77,14 +92,17 @@ func logInUser(email: String, password: String) -> (success: Bool, errorString: 
  Returns:
     Bool: A boolean value denoting whether or not the log-out was successful (only returns a bool and not a tuple because any errors thrown by this function would not be user-caused)
  */
-func logOutUser() -> Bool {
+func logOutUser() -> (success: Bool, errorString: String) {
+    var errorString = "False error"
+    var success = true
     do {
         try Auth.auth().signOut()
-        return true
+        success = true
     } catch let signOutError as NSError {
-        print("Error signing out: %@", signOutError)
-        return false
+        errorString = signOutError.localizedDescription
+        success = false
     }
+    return (success: success, errorString: errorString)
 }
 
 
