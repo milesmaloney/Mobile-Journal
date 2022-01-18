@@ -102,20 +102,20 @@ struct LogInButtonView: View {
     
     var body: some View {
         Button(action: {
-            if(debugLogIn(email: self.email, password: self.password, user: &self.user))/*RETURN THIS LINE OF CODE WHEN DB IS FULLY ACTIVE:logInUser(email: self.email, password: self.password).success)*/ {
-                alert = Alert(title: Text("Log-in Successful"), message: Text("You have logged in successfully!"))
-                alertIsPresented = true
+            let result = logInUser(email: self.email, password: self.password)
+            if(result.success) {
+                self.alert = Alert(title: Text("Log-in Successful"), message: Text("You have logged in successfully!"))
+
                 //TODO: Continue to logged-in views
             }
             else {
-                //TODO: Throw an error and edit the page accordingly
-                alert = Alert(title: Text("Log-in failed"), message: Text("E-mail or password is incorrect."))
-                alertIsPresented = true
+                self.alert = Alert(title: Text("Log-in failed"), message: Text(result.errorString))
             }
+            self.alertIsPresented = true
         }) {
             ButtonView(text: .constant("Log In"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
         }.alert(isPresented: self.$alertIsPresented) {
-            alert
+            self.alert
         }
         
     }

@@ -90,7 +90,7 @@ struct ConfirmEntryButtonView: View {
             }
         }) {
             ButtonView(text: .constant("Confirm Entry"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.primaryColor, bgc: self.$user.theme.secondaryColor)
-        }.alert(isPresented: self.alertIsPresented) {
+        }.alert(isPresented: self.$alertIsPresented) {
             self.alert
         }
     }

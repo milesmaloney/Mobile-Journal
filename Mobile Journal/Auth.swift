@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseAuth
 
 
@@ -22,20 +23,19 @@ import FirebaseAuth
  */
 func registerUser(email: String, username: String, password: String, passwordConfirm: String) -> (success: Bool, errorString: String) {
     
-    var errorString: String = ""
-    var success: Bool = false
+    var errorString: String = "False error"
+    var success: Bool = true
     
     if(password == passwordConfirm) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if(error != nil) {
+            guard let user = authResult?.user, error == nil else {
                 errorString = error!.localizedDescription
+                success = false
+                return
             }
-            else {
-                let newUser: User = User(username: username, theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
-                if(addUserDataToDB(user: newUser).success) {
-                    success = true
-                }
-            }
+            let newUser: User = User(username: username, theme: defaultTheme, journalEntries: [], sliders: defaultSliders)
+            //if(addUserDataToDB(user: newUser).success) {
+            //}
         }
         return (success: success, errorString: errorString)
     }
@@ -56,15 +56,14 @@ func registerUser(email: String, username: String, password: String, passwordCon
  */
 func logInUser(email: String, password: String) -> (success: Bool, errorString: String){
     
-    var errorString: String = ""
-    var success: Bool = false
+    var errorString: String = "False error"
+    var success: Bool = true
     
     Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-        if(error != nil) {
+        guard let user = authResult?.user, error == nil else {
             errorString = error!.localizedDescription
-        }
-        else {
-            success = true
+            success = false
+            return
         }
     }
     return (success: success, errorString: errorString)
