@@ -70,20 +70,39 @@ func logInUser(email: String, password: String) -> (success: Bool, errorString: 
 }
 
 /*
+ This function returns a boolean value denoting whether a user is logged in or not
+ Parameters:
+    User: The user state of MainView
+ Returns:
+    Bool: Boolean value denoting whether there is a user logged in
+ */
+func userIsLoggedIn() -> Bool {
+    if Auth.auth().currentUser != nil {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+/*
  This function logs out a user
  Parameters:
     None: returns the current user in the auth variable to defaults
  Returns:
     Bool: A boolean value denoting whether or not the log-out was successful (only returns a bool and not a tuple because any errors thrown by this function would not be user-caused)
  */
-func logOutUser() -> Bool {
+func logOutUser() -> (success: Bool, errorString: String) {
+    var errorString = "False error"
+    var success = true
     do {
         try Auth.auth().signOut()
-        return true
+        success = true
     } catch let signOutError as NSError {
-        print("Error signing out: %@", signOutError)
-        return false
+        errorString = signOutError.localizedDescription
+        success = false
     }
+    return (success: success, errorString: errorString)
 }
 
 

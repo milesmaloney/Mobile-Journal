@@ -81,6 +81,7 @@ struct CalendarDate {
 
 
 struct MainView: View {
+    @State var isLoggedIn: Bool = false
     @State var user: User
     @State var date: CalendarDate
     
@@ -94,11 +95,11 @@ struct MainView: View {
     }
     
     var body: some View {
-        if(!userIsLoggedIn(user: self.user)) {
-            NavPreLogInView( user: self.$user)
+        if(!isLoggedIn) {
+            NavPreLogInView(user: self.$user, isLoggedIn: self.$isLoggedIn)
         }
         else {
-            NavPostLogInView(user: self.$user, date: self.$date)
+            NavPostLogInView(user: self.$user, date: self.$date, isLoggedIn: self.$isLoggedIn)
         }
     }
 }
@@ -138,16 +139,6 @@ func getDateToday(formattedDate: String) -> (month: Int, day: Int, year: Int) {
 //Helper functions
 
 
-/*
- This function returns a boolean value denoting whether a user is logged in or not
- Parameters:
-    User: The user state of MainView
- Returns:
-    Bool: Boolean value denoting whether there is a user logged in
- */
-func userIsLoggedIn(user: User) -> Bool {
-    user.username == "default" ? false: true
-}
 
 
 //Extracted Subviews (high level to low level)
@@ -155,11 +146,12 @@ func userIsLoggedIn(user: User) -> Bool {
 //Pre-log in views
 struct NavPreLogInView: View {
     @Binding var user: User
+    @Binding var isLoggedIn: Bool
     
     var body: some View {
         NavigationView {
             VStack {
-                NavLogInView(user: self.$user)
+                NavLogInView(user: self.$user, isLoggedIn: self.$isLoggedIn)
                 NavRegistrationView(user: self.$user)
             }.navigationTitle("Log In / Register").navigationBarTitleDisplayMode(.inline)
         }
@@ -168,9 +160,10 @@ struct NavPreLogInView: View {
 
 struct NavLogInView: View {
     @Binding var user: User
+    @Binding var isLoggedIn: Bool
     
     var body: some View {
-        NavigationLink(destination: LogInView(user: self.$user)) {
+        NavigationLink(destination: LogInView(user: self.$user, isLoggedIn: self.$isLoggedIn)) {
             ButtonView(text: .constant("Log In"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
         }
     }
@@ -190,11 +183,12 @@ struct NavRegistrationView: View {
 struct NavPostLogInView: View {
     @Binding var user: User
     @Binding var date: CalendarDate
+    @Binding var isLoggedIn: Bool
     
     var body: some View {
         NavigationView {
             VStack {
-                NavLogOutView(user: self.$user)
+                NavLogOutView(user: self.$user, isLoggedIn: self.$isLoggedIn)
                 NavCalendarView(user: self.$user, date: self.$date)
                 NavJournalEntryView(user: self.$user, date: self.$date)
                 NavSettingsView(user: self.$user)
@@ -207,20 +201,27 @@ struct NavPostLogInView: View {
 
 struct NavLogOutView: View {
     @Binding var user: User
+    @Binding var isLoggedIn: Bool
+    @State var alert: Alert = Alert(title: Text("Error"), message: Text("ERROR: Log-out not yet meant to be attempted. Please restart the app and try again."))
+    @State var alertIsPresented: Bool = false
     
     var body: some View {
-        NavigationLink(destination: LogInView(user: self.$user)) {
+        NavigationLink(destination: LogInView(user: self.$user, isLoggedIn: self.$isLoggedIn)) {
             Button(action: {
-                if(debugLogOut(user: &self.user)) {
-                    /*TODO: continue to login page*/
+                let result = logOutUser()
+                if(result.success) {
+                    self.alert = Alert(title: Text("Logged out successfully"), message: Text("You have been successfully logged out."), dismissButton: .default(Text("Dismiss"), action: {
+                        self.isLoggedIn = false
+                    }))
                 }
                 else {
-                    /*
-                     TODO: throw error for failed logout
-                     */
+                    self.alert = Alert(title: Text("Log out failed"), message: Text(result.errorString))
                 }
+                self.alertIsPresented = true
             }) {
                 ButtonView(text: .constant("Log Out"), tc1: self.$user.theme.textColor, tc2: self.$user.theme.secondaryColor, bgc: self.$user.theme.primaryColor)
+            }.alert(isPresented: self.$alertIsPresented) {
+                self.alert
             }
         }
     }

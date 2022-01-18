@@ -10,6 +10,7 @@ import CoreData
 
 struct LogInView: View {
     @Binding var user: User
+    @Binding var isLoggedIn: Bool
     
     @State var email: String = ""
     @State var password: String = ""
@@ -19,7 +20,7 @@ struct LogInView: View {
             LogInTitleView(theme: self.$user.theme)
             LogInEmailView(email: self.$email)
             LogInPasswordView(password: self.$password)
-            LogInButtonView(user: self.$user, email: self.$email, password: self.$password)
+            LogInButtonView(user: self.$user, isLoggedIn: self.$isLoggedIn, email: self.$email, password: self.$password)
             LogInRegisterView(theme: self.$user.theme)
         }.navigationTitle("Log In").navigationBarTitleDisplayMode(.inline).padding()
     }
@@ -95,6 +96,7 @@ struct LogInPasswordView: View {
 
 struct LogInButtonView: View {
     @Binding var user: User
+    @Binding var isLoggedIn: Bool
     @Binding var email: String
     @Binding var password: String
     @State var alertIsPresented: Bool = false
@@ -104,7 +106,9 @@ struct LogInButtonView: View {
         Button(action: {
             let result = logInUser(email: self.email, password: self.password)
             if(result.success) {
-                self.alert = Alert(title: Text("Log-in Successful"), message: Text("You have logged in successfully!"))
+                self.alert = Alert(title: Text("Log-in Successful"), message: Text("You have logged in successfully!"), dismissButton: .default(Text("Dismiss"), action: {
+                    self.isLoggedIn = true
+                }))
 
                 //TODO: Continue to logged-in views
             }
@@ -136,7 +140,7 @@ struct LogInRegisterView: View {
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            LogInView(user: .constant(defaultUser)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).previewInterfaceOrientation(.portrait)
+            LogInView(user: .constant(defaultUser), isLoggedIn: .constant(false)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).previewInterfaceOrientation(.portrait)
         }
     }
 }
